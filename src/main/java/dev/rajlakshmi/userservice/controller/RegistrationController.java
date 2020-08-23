@@ -10,9 +10,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -41,6 +39,14 @@ public class RegistrationController {
                 HttpStatus.OK,
                 new UserResponseDto(user.getId(), user.getFullName(), user.getEmail(), user.isActive())
         );
+    }
+
+    // /user/confirm?token=34445355
+    @GetMapping("/user/confirm")
+    public ResponseDto<UserResponseDto> validateUser(@RequestParam String token) {
+        userService.validateUser(token);
+
+        return null;
     }
 
 }
